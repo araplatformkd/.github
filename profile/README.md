@@ -1,19 +1,42 @@
 # ARA Platform — 프로젝트 개요 (Meta)
 
-> **조직 [araplatformkd](https://github.com/araplatformkd)의 Overview에 방문 시 가장 먼저 보이는 문서입니다.**  
-> 편집·이슈·커밋 히스토리는 공개 메타 저장소 [**ara-overview**](https://github.com/araplatformkd/ara-overview)의 `README.md`를 기준으로 합니다.
-
 [araplatformkd](https://github.com/araplatformkd) 조직의 **ARA(시설·온실 자동화) 플랫폼** 관련 저장소들의 역할, 관계, 권장 설치 순서를 한곳에서 안내합니다.  
-코드 본문은 각 하위 저장소에 있으며, 메타 문서·내비게이션 용도입니다.
+코드 본문은 각 하위 저장소에 있으며, 이 저장소는 **문서·내비게이션** 용도입니다.
 
-**저장소 카드(Pinned / Popular)** 가 Overview에 보이게 하려면 조직 **Owner**가 아래처럼 **Pin**을 해야 합니다.
+> **조직 방문자에게 먼저 보이게 하기:** [github.com/araplatformkd](https://github.com/araplatformkd) **Overview**에는 이 레포의 `README.md`가 아니라, 공개 저장소 [araplatformkd/.github](https://github.com/araplatformkd/.github)의 [profile/README.md](https://github.com/araplatformkd/.github/blob/main/profile/README.md)만 최상단에 렌더링됩니다.
 
-1. [github.com/araplatformkd](https://github.com/araplatformkd) → **Overview** 탭  
-2. 오른쪽 **View as** → **Public** 선택(비회원이 보는 화면과 동일하게 맞춤)  
-3. 오른쪽 사이드바에서 **Pin repositories** 또는 **Customize pins** 클릭  
-4. **`ara-overview`**(및 필요 시 다른 공개 저장소) 선택 후 저장  
+### 이 README만 수정해서 조직 홈에 올리는 방법
+
+| 방식 | 할 일 |
+|------|--------|
+| **자동 (권장)** | 아래 [GitHub Actions 동기화](#github-actions로-조직-profile-자동-반영)를 한 번만 설정해 두면, 이 파일(`README.md`)을 `master`/`main`에 push할 때마다 `.github/profile/README.md`가 같이 갱신됩니다. |
+| **수동** | [araplatformkd/.github](https://github.com/araplatformkd/.github)에서 `profile/README.md`를 이 파일과 동일하게 고친 뒤 커밋·푸시합니다. |
+
+**저장소 카드(Pinned / Popular)** 가 Overview에 보이게 하려면 GitHub가 자동으로만 채워 주지 않고, 조직 **Owner**가 아래처럼 **Pin**을 해야 합니다.
+
+1. [github.com/araplatformkd](https://github.com/araplatformkd) → **Overview** 탭
+2. 오른쪽 **View as** → **Public** 선택(비회원이 보는 화면과 동일하게 맞춤)
+3. 오른쪽 사이드바에서 **Pin repositories** 또는 **Customize pins** 클릭
+4. **ara-overview**(및 필요 시 다른 공개 저장소) 선택 후 저장
 
 자세한 설명: [Pinning repositories to your organization's profile](https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/customizing-your-organizations-profile#pinning-repositories-to-your-organizations-profile).
+
+---
+
+## GitHub Actions로 조직 profile 자동 반영
+
+`README.md`만 고쳐서 [조직 Overview](https://github.com/araplatformkd)에 반영하려면, 이 저장소의 워크플로가 [araplatformkd/.github](https://github.com/araplatformkd/.github)의 `profile/README.md`를 덮어씁니다.
+
+1. **토큰 만들기** (조직/저장소에 쓸 수 있는 계정으로 로그인)  
+   - **Fine-grained PAT** (권장): 대상 조직 `araplatformkd` → 저장소 **`.github`만** 선택 → **Contents: Read and write**  
+   - 또는 **Classic PAT**: `repo` 범위 (범위가 더 넓음)
+2. [**ara-overview** → Settings → Secrets and variables → Actions](https://github.com/araplatformkd/ara-overview/settings/secrets/actions) → **New repository secret**  
+   - Name: `ORG_PROFILE_SYNC_PAT`  
+   - Value: 위에서 만든 토큰
+3. `master` 또는 `main`에 `README.md`를 **push**하면 워크플로 **Sync org profile README**가 실행됩니다.  
+   - 필요 시 [Actions 탭](https://github.com/araplatformkd/ara-overview/actions)에서 **Run workflow**로 수동 실행할 수 있습니다.
+
+토큰을 넣기 전에는 **수동**으로 `.github`의 `profile/README.md`를 맞춰 두어야 조직 홈 문구가 바뀝니다.
 
 ---
 
@@ -22,7 +45,7 @@
 
 | 저장소                                                                           | 설명                                                                                                   |
 | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| **[ara-overview](https://github.com/araplatformkd/ara-overview)**             | (메타 저장소) 전체 구조·연동·시작 가이드                                                                              |
+| **[ara-overview](https://github.com/araplatformkd/ara-overview)**             | (이 저장소) 전체 구조·연동·시작 가이드                                                                              |
 | **[ara-edge-server211](https://github.com/araplatformkd/ara-edge-server211)** | **AG Edge Server** — 온실·시설용 엣지(Node.js). HTTP·정적 리소스·MQTT 브로커·웹앱 레지스트리·시설 관리(`ag.system.facility`) 등 |
 | **[ara-backend-node](https://github.com/araplatformkd/ara-backend-node)**     | **현장 백엔드** — Raspberry Pi 등에서 동작하는 Node.js 기반 실내/온실 자동화(MQTT·Modbus·InfluxDB·Express 등)              |
 | **[ara-front-web](https://github.com/araplatformkd/ara-front-web)**           | **웹 관리자·대시보드** 프론트엔드(AdminLTE 기반 UI 등)                                                               |
@@ -62,9 +85,16 @@ flowchart LR
   clients <-- "HTTP / API" --> field
 ```
 
+
+
 - **ara-edge-server211**: 시설 단위 **플랫폼 코어**. 웹앱을 등록·실행하고, MQTT로 장비·서비스를 묶습니다. `workspace/` 아래 앱(예: 시설 관리, 제어기·양액기 연동, CCTV 등)이 동작합니다.
 - **ara-backend-node**: **개별 온실/실내 노드**에서 센서·구동기·자동운전·시계열 저장을 담당하는 백엔드입니다. Influx·MQTT 시뮬레이터 등이 포함됩니다.
-- **ara-front-web** / **ara-mobile-app**: 운영자·관리자가 상태를 보고 설정하는 **UI 계층**입니다. 실제 연결 URL·API는 배포 환경(엣지 IP, 도메인, 리버스 프록시)에 맞춥니다.
+- **ara-front-web** : 웹앱으로 제작되어 졌으며 실시간 모니터링 및 환경설정 앱입니다.  
+- **ara-mobile-app**: 
+  - 운영자·관리자가 상태를 보고 설정하는 **UI 계층**입니다. 실제 연결 URL·API는 배포 환경(엣지 IP, 도메인, 리버스 프록시)에 맞춥니다.
+  - Cordova WebView 를 활용하여 안드로이드앱을 제작하여 Google Firebase Storage 를 통해 앱업데이트 연동되어져 있습니다. 
+  - Flutter WebViewe 를 활용하여 제작된 안드로이드 앱. (현재 이 앱은 서비스 되고 있지 않음).
+  - 테스트 
 
 ---
 
@@ -74,7 +104,7 @@ flowchart LR
 
 ### 1. 문서 읽기
 
-1. 이 안내(또는 [ara-overview README](https://github.com/araplatformkd/ara-overview#readme))로 전체 그림을 잡습니다.
+1. 이 `ara-overview` README로 전체 그림을 잡습니다.
 2. 사용할 저장소의 **자체 README**를 읽습니다(엣지는 `install.md`, 백엔드는 `README.md`의 요구 사항·엔트리 포인트).
 
 ### 2. ara-edge-server211 (엣지 플랫폼)
@@ -121,7 +151,7 @@ npm install
 
 ```text
 DEV_ARA/
-├── ara-overview/          # 메타 저장소
+├── ara-overview/          # 이 메타 저장소
 ├── ara-edge-server211/
 ├── ara-backend-node/
 ├── ara-front-web/
@@ -135,12 +165,12 @@ DEV_ARA/
 ## 이슈·기여
 
 - **버그·기능 요청**: 해당 기능이 속한 **원 저장소**의 Issues에 등록하는 것이 가장 빠릅니다.
-- **문서 오류**(플랫폼 개요): [ara-overview Issues](https://github.com/araplatformkd/ara-overview/issues)에 남겨 주세요.
+- **문서 오류**(이 overview만의 문제): [ara-overview Issues](https://github.com/araplatformkd/ara-overview/issues)에 남겨 주세요.
 - **기여**: 대상 저장소의 README·브랜치 정책을 따르고, 커밋 메시지는 변경 요약이 한눈에 들어오게 작성합니다.
 
 ---
 
 ## 라이선스
 
-메타 문서·라이선스 원문은 [**ara-overview** 저장소](https://github.com/araplatformkd/ara-overview)의 `LICENSE`를 따릅니다.  
+이 저장소(`ara-overview`)의 문서는 저장소 루트 `LICENSE`를 따릅니다.  
 **각 하위 저장소는 자체 LICENSE**가 있을 수 있으므로 재배포·상용 이용 전 반드시 해당 저장소의 라이선스를 확인하세요.
